@@ -5,14 +5,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
+
 public class Traslado {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private final String qrVianda;
+    @Transient
     private final Ruta ruta;
     private EstadoTrasladoEnum estado;
     private final LocalDateTime fechaCreacion;

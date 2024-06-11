@@ -20,6 +20,9 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class Fachada implements FachadaLogistica {
 
@@ -30,6 +33,9 @@ public class Fachada implements FachadaLogistica {
     private FachadaViandas fachadaViandas;
     private FachadaHeladeras fachadaHeladeras;
     private FachadaColaboradores fachadaColaboradores;
+
+    private EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
 
     /*
     * "Un colaborador de transporte establece que puede llevar

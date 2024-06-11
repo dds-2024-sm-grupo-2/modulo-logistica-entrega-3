@@ -41,14 +41,14 @@ public class WebApp {
         var app = Javalin.create().start(port);
 
         // Home
-        app.get("/", ctx -> ctx.result("Módulo Logística - Diseño de Sistemas K3003 - UTN FRBA."));
+        app.get("/", ctx -> ctx.result("Modulo Logistica - Diseño de Sistemas K3003 - UTN FRBA"));
 
         // APIs
         app.post("/rutas", rutaController::agregar);
         app.post("/traslados", trasladosController::asignar);
         app.get("/traslados/{id}", trasladosController::obtener);
         app.patch("/traslados/{id}",trasladosController::modificar);
-
+        // TODO: Añadir endpoint de cleanup
     }
 
     public static ObjectMapper createObjectMapper() {
