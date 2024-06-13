@@ -14,7 +14,7 @@ Se implemtan los siguientes endpoints:
 
 ```
     - Método: POST
-    - URL: https://two024-tp-entrega-2-kenzogrosvald.onrender.com/rutas
+    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/rutas
     - Headers: 
         {
             "Content-Type": "application/json"
