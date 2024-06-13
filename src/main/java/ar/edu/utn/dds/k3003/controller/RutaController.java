@@ -20,4 +20,9 @@ public class RutaController {
         context.json(rutaDTORta);
         context.status(HttpStatus.CREATED);
     }
+
+    public void eliminar(Context ctx) {
+        fachada.rutaRepository.borrarTodo();
+        ctx.status(HttpStatus.NO_CONTENT);
+    }
 }

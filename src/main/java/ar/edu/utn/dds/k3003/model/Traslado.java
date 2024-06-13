@@ -1,23 +1,35 @@
 package ar.edu.utn.dds.k3003.model;
 
 import ar.edu.utn.dds.k3003.facades.dtos.EstadoTrasladoEnum;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@Entity
+@Table(name = "traslados")
 public class Traslado {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final String qrVianda;
-    private final Ruta ruta;
+    @Column(name = "qrVianda")
+    private String qrVianda;
+    @ManyToOne
+    @JoinColumn(name = "ruta_id")
+    private Ruta ruta;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
     private EstadoTrasladoEnum estado;
-    private final LocalDateTime fechaCreacion;
-    private final LocalDateTime fechaTraslado;
-    private final Long collaboratorId;
+    @Column(name = "fechaCreacion")
+    private LocalDateTime fechaCreacion;
+    @Column(name = "fechaTraslado")
+    private LocalDateTime fechaTraslado;
+    @Column(name = "collaboratorId")
+    private Long collaboratorId;
 
     public Traslado(String qrVianda, Ruta ruta, EstadoTrasladoEnum estado, LocalDateTime fechaTraslado) {
         this.qrVianda = qrVianda;
@@ -28,4 +40,6 @@ public class Traslado {
         this.collaboratorId = ruta.getColaboradorId();
     }
 
+    public Traslado() {
+    }
 }

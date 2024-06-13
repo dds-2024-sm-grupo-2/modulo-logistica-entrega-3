@@ -65,4 +65,9 @@ public class TrasladoController {
             context.status(HttpStatus.NOT_FOUND);
         }
     }
+
+    public void eliminar(Context ctx) {
+        fachada.trasladoRepository.borrarTodo();
+        ctx.status(HttpStatus.NO_CONTENT);
+    }
 }
