@@ -92,6 +92,14 @@ Se implemtan los siguientes endpoints:
         }
 ```
 
+- **Obtener todos los traslados de un colaborador por su ID, año y mes**
+
+```
+    - Método: GET
+    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/traslados/traslados/search/findByColaboradorId?id=4&anio=2024&mes=5
+    - Response code: 200 OK
+```
+
 - **Modificar el estado de un traslado por su ID**
 
 ```
