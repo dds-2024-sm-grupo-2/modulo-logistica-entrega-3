@@ -23,6 +23,19 @@
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.6.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>5.6.15.Final</version>
+    </dependency>
+
     <!-- Libs -->
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -47,7 +60,7 @@
     <dependency>
       <groupId>com.github.ezequieljsosa</groupId>
       <artifactId>dds-eval-tp2024</artifactId>
-      <version>0.0.21</version>
+      <version>0.0.22</version>
     </dependency>
 
     <dependency>

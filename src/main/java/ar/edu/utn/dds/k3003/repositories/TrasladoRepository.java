@@ -3,54 +3,68 @@ package ar.edu.utn.dds.k3003.repositories;
 import ar.edu.utn.dds.k3003.facades.dtos.EstadoTrasladoEnum;
 import ar.edu.utn.dds.k3003.model.Traslado;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 public class TrasladoRepository {
+    private final EntityManager entityManager;
 
-    private static AtomicLong seqId = new AtomicLong();
-    private Collection<Traslado> traslados;
-
-    public TrasladoRepository(){
-        this.traslados = new ArrayList<>();
+    public TrasladoRepository(EntityManager entityManager){
+        this.entityManager = entityManager;
     }
 
     public Traslado save(Traslado traslado) {
+
         if (Objects.isNull(traslado.getId())) {
-            traslado.setId(seqId.getAndIncrement());
-            this.traslados.add(traslado);
+            entityManager.getTransaction().begin();
+            entityManager.persist(traslado);
+            entityManager.getTransaction().commit();
         }
+
         return traslado;
     }
 
     public Traslado findById(Long id) {
-        Optional<Traslado> first = this.traslados.stream().filter(x -> x.getId().equals(id)).findFirst();
-        return first.orElseThrow(() -> new NoSuchElementException(
-                String.format("No hay un traslado de id: %s", id)
-        ));
-    }
 
-    public List<Traslado> findByCollaboratorId(Long colaboradorId, Integer mes, Integer anio) {
-        List<Traslado> trasladosDelColaborador = this.traslados.stream()
-                .filter(x -> x.getCollaboratorId().equals(colaboradorId))
-                .filter(x -> x.getFechaTraslado().getMonthValue() == mes)
-                .filter(x -> x.getFechaTraslado().getYear() == anio)
-                .collect(Collectors.toList());
+        Traslado traslado = entityManager.find(Traslado.class, id);
 
-        /* Lo dejo comentado porque el enunciado no pide que se lance una excepción si no hay traslados, pero estaria bueno, sino devuelvo una lista vacia
-
-        if (trasladosDelColaborador.isEmpty()) {
-            throw new NoSuchElementException(String.format("No hay traslados para ese colaborador: %s en el mes: %s y año: %s", colaboradorId, mes, anio));
+        if (Objects.isNull(traslado)) {
+            throw new NoSuchElementException(String.format("No hay una ruta de id: %s", id));
         }
-        */
-        return trasladosDelColaborador;
-    }
 
-    public Traslado modificarEstado(Long idTraslado, EstadoTrasladoEnum estado) {
-        Traslado traslado = this.findById(idTraslado);
-        traslado.setEstado(estado);
         return traslado;
     }
 
+    public List<Traslado> findByCollaboratorId(Long colaboradorId, Integer mes, Integer anio) {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Traslado> criteriaQuery = criteriaBuilder.createQuery(Traslado.class);
+        Root<Traslado> root = criteriaQuery.from(Traslado.class);
+
+        Predicate colaborador_id = criteriaBuilder.equal(root.get("collaboratorId"), colaboradorId);
+        Predicate fecha_mes = criteriaBuilder.equal(criteriaBuilder.function("MONTH", Integer.class, root.get("fechaTraslado")), mes);
+        Predicate fecha_anio = criteriaBuilder.equal(criteriaBuilder.function("YEAR", Integer.class, root.get("fechaTraslado")), anio);
+
+        criteriaQuery.select(root).where(criteriaBuilder.and(colaborador_id, fecha_mes, fecha_anio));
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    public void modificarEstado(Long idTraslado, EstadoTrasladoEnum estado) {
+
+        entityManager.getTransaction().begin();
+        Traslado traslado = this.findById(idTraslado);
+        traslado.setEstado(estado);
+        entityManager.getTransaction().commit();
+    }
+
+    public void borrarTodo() {
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("DELETE FROM Traslado").executeUpdate();
+        entityManager.getTransaction().commit();
+    }
 }
