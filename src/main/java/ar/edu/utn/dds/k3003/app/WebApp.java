@@ -45,6 +45,7 @@ public class WebApp {
         app.delete("/rutas", rutaController::eliminar);
         app.post("/traslados", trasladosController::asignar);
         app.get("/traslados/{id}", trasladosController::obtener);
+        app.get("/traslados/search/findByColaboradorId", trasladosController::obtenerPorColaboradorId);
         app.patch("/traslados/{id}",trasladosController::modificar);
         app.delete("/traslados", trasladosController::eliminar);
     }
