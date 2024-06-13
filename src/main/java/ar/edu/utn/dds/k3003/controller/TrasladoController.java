@@ -40,6 +40,23 @@ public class TrasladoController {
         }
     }
 
+    public void obtenerPorColaboradorId(Context context) {
+        var id = context.queryParamAsClass("id", Long.class).get();
+        var anio = context.queryParamAsClass("anio", Integer.class).get();
+        var mes = context.queryParamAsClass("mes", Integer.class).get();
+
+        var traslados = this.fachada.trasladosDeColaborador(id, mes, anio);
+
+        // Si no hay traslados, devuelvo un 404
+        if (Objects.isNull(traslados) || traslados.isEmpty()) {
+            context.result("No se encontraron traslados para el colaborador con id " + id + " en el mes " + mes + " y año " + anio + ".");
+            context.status(HttpStatus.NOT_FOUND);
+            return;
+        }
+        context.json(traslados);
+
+    }
+
     public void modificar(Context context) {
         var id = context.pathParamAsClass("id", Long.class).get();
         try {
