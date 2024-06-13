@@ -7,7 +7,7 @@
 
 ### API REST
 ```
-https://two024-tp-entrega-2-kenzogrosvald.onrender.com
+https://two024-tp-entrega-3-kenzogrosvald.onrender.com
 ```
 Se implemtan los siguientes endpoints:
 - **Agregar una nueva ruta**
@@ -39,7 +39,7 @@ Se implemtan los siguientes endpoints:
 
 ```
     - Método: POST
-    - URL: https://two024-tp-entrega-2-kenzogrosvald.onrender.com/traslados
+    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/traslados
     - Headers: 
         {
             "Content-Type": "application/json"
@@ -66,7 +66,7 @@ Se implemtan los siguientes endpoints:
 
 ```
     - Método: GET
-    - URL: https://two024-tp-entrega-2-kenzogrosvald.onrender.com/traslados/{id}
+    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/traslados/{id}
     - Response code: 200 OK
     - Response body:
         {
@@ -84,7 +84,7 @@ Se implemtan los siguientes endpoints:
 
 ```
     - Método: PATCH
-    - URL: https://two024-tp-entrega-2-kenzogrosvald.onrender.com/traslados/{id}
+    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/traslados/{id}
     - Headers: 
         {
             "Content-Type": "application/json"
