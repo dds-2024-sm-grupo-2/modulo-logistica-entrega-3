@@ -35,6 +35,18 @@ Se implemtan los siguientes endpoints:
         }
 ```
 
+- **Eliminar todas las rutas**
+
+```
+    - Método: DELETE
+    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/rutas
+    - Headers: 
+        {
+            "Content-Type": "application/json"
+        }
+    - Response code: 204 No Content
+```
+
 - **Asignar un nuevo traslado a un colaborador**
 
 ```
@@ -100,6 +112,20 @@ Se implemtan los siguientes endpoints:
         }
     - Response code: 200 OK
 ```
+
+- **Eliminar todos los traslados**
+
+```
+    - Método: DELETE
+    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/traslados
+    - Headers: 
+        {
+            "Content-Type": "application/json"
+        }
+    - Response code: 204 No Content
+```
+
+
 <hr>
 
 <div id="footer" align="center">
