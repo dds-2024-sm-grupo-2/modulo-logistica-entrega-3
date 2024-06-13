@@ -26,16 +26,24 @@ import javax.persistence.Persistence;
 
 public class Fachada implements FachadaLogistica {
 
-    private final RutaRepository rutaRepository = new RutaRepository();
-    private final RutaMapper rutaMapper = new RutaMapper();
-    private final TrasladoRepository trasladoRepository = new TrasladoRepository();
-    private final TrasladoMapper trasladoMapper = new TrasladoMapper();
+    public final RutaRepository rutaRepository;
+    private final RutaMapper rutaMapper;
+    public final TrasladoRepository trasladoRepository;
+    private final TrasladoMapper trasladoMapper;
     private FachadaViandas fachadaViandas;
     private FachadaHeladeras fachadaHeladeras;
     private FachadaColaboradores fachadaColaboradores;
-
     private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
+
+    public Fachada() {
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("postgres");
+        this.entityManager = entityManagerFactory.createEntityManager();
+        this.rutaRepository = new RutaRepository(entityManager);
+        this.trasladoRepository = new TrasladoRepository(entityManager);
+        this.rutaMapper = new RutaMapper();
+        this.trasladoMapper = new TrasladoMapper();
+    }
 
     /*
     * "Un colaborador de transporte establece que puede llevar

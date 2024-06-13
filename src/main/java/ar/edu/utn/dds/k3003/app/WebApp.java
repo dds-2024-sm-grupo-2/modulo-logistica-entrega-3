@@ -22,7 +22,6 @@ public class WebApp {
 
         // Variables de entorno
         var URL_VIANDAS = env.get("URL_VIANDAS");
-        var URL_LOGISTICA = env.get("URL_LOGISTICA");
         var URL_HELADERAS = env.get("URL_HELADERAS");
         var URL_COLABORADORES = env.get("URL_COLABORADORES");
 
@@ -36,8 +35,6 @@ public class WebApp {
         fachada.setHeladerasProxy(new HeladerasProxy(objectMapper));
         var rutaController = new RutaController(fachada);
         var trasladosController = new TrasladoController(fachada);
-
-
         var app = Javalin.create().start(port);
 
         // Home
@@ -45,10 +42,11 @@ public class WebApp {
 
         // APIs
         app.post("/rutas", rutaController::agregar);
+        app.delete("/rutas", rutaController::eliminar);
         app.post("/traslados", trasladosController::asignar);
         app.get("/traslados/{id}", trasladosController::obtener);
         app.patch("/traslados/{id}",trasladosController::modificar);
-        // TODO: Añadir endpoint de cleanup
+        app.delete("/traslados", trasladosController::eliminar);
     }
 
     public static ObjectMapper createObjectMapper() {

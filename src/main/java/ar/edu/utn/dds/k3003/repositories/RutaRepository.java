@@ -5,38 +5,64 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 @Setter
 @Getter
 public class RutaRepository {
+    private final EntityManager entityManager;
 
-    private static AtomicLong seqId = new AtomicLong();
-    private Collection<Ruta> rutas;
-
-    public RutaRepository() {
-        this.rutas = new ArrayList<>();
+    public RutaRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     public Ruta save(Ruta ruta) throws NoSuchElementException {
 
         if (Objects.isNull(ruta.getId())) {
-            ruta.setId(seqId.getAndIncrement());
-            this.rutas.add(ruta);
+            entityManager.getTransaction().begin();
+            entityManager.persist(ruta);
+            entityManager.getTransaction().commit();
         }
+
         return ruta;
     }
 
     public Ruta findById(Long id) {
-        Optional<Ruta> first = this.rutas.stream().filter(x -> x.getId().equals(id)).findFirst();
-        return first.orElseThrow(() -> new NoSuchElementException(
-                String.format("No hay una ruta de id %s", id)
-        ));
+
+        Ruta ruta = entityManager.find(Ruta.class, id);
+
+        if (Objects.isNull(ruta)){
+            throw new NoSuchElementException(String.format("No hay una ruta de id: %s", id));
+        }
+
+        return ruta;
     }
 
     public List<Ruta> findByHeladeras(Integer heladeraOrigen, Integer heladeraDestino) {
-        return this.rutas.stream().filter(x -> x.getHeladeraIdOrigen().equals(heladeraOrigen) &&
-                x.getHeladeraIdDestino().equals(heladeraDestino)
-        ).toList();
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Ruta> criteriaQuery = criteriaBuilder.createQuery(Ruta.class);
+        Root<Ruta> root = criteriaQuery.from(Ruta.class);
+
+        criteriaQuery.select(root).where(
+                criteriaBuilder.equal(root.get("heladeraIdOrigen"), heladeraOrigen),
+                criteriaBuilder.equal(root.get("heladeraIdDestino"), heladeraDestino)
+        );
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    public void borrarTodo() {
+        entityManager.getTransaction().begin();
+        try {
+            int deletedCount = entityManager.createQuery("DELETE FROM Ruta").executeUpdate();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        }
     }
 }
