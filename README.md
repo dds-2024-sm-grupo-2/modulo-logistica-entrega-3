@@ -9,7 +9,7 @@
 ```
 https://two024-tp-entrega-3-kenzogrosvald.onrender.com
 ```
-Se implemtan los siguientes endpoints:
+Se implementan los siguientes endpoints:
 - **Agregar una nueva ruta**
 
 ```
