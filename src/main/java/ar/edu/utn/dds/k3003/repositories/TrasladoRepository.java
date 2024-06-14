@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.k3003.repositories;
 
 import ar.edu.utn.dds.k3003.facades.dtos.EstadoTrasladoEnum;
+import ar.edu.utn.dds.k3003.model.Ruta;
 import ar.edu.utn.dds.k3003.model.Traslado;
 
 import javax.persistence.EntityManager;
@@ -50,6 +51,19 @@ public class TrasladoRepository {
         Predicate fecha_anio = criteriaBuilder.equal(criteriaBuilder.function("YEAR", Integer.class, root.get("fechaTraslado")), anio);
 
         criteriaQuery.select(root).where(criteriaBuilder.and(colaborador_id, fecha_mes, fecha_anio));
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    public List<Traslado> findByRuta(Ruta ruta) {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Traslado> criteriaQuery = criteriaBuilder.createQuery(Traslado.class);
+        Root<Traslado> root = criteriaQuery.from(Traslado.class);
+
+        Predicate ruta_query = criteriaBuilder.equal(root.get("ruta"), ruta);
+
+        criteriaQuery.select(root).where(criteriaBuilder.and(ruta_query));
 
         return entityManager.createQuery(criteriaQuery).getResultList();
     }

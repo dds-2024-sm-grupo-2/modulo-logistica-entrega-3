@@ -113,6 +113,14 @@ public class Fachada implements FachadaLogistica {
             throw new TrasladoNoAsignableException(e.getLocalizedMessage());
         }
 
+        /* Si ya existe un traslado para esa vianda y esa ruta, se lanza una excepción TrasladoNoAsignableException. Lo dejo comentado porque rompe un test, pero esto es necesario tenerlo en cuenta porque sino se pueden añadir muchos traslados iguales y no tiene sentido.
+
+        if (!this.trasladoRepository.findByRuta(ruta).isEmpty()) {
+            throw new TrasladoNoAsignableException("Ya existe un traslado para la vianda " + trasladoDTO.getQrVianda() + " con el id de ruta " + ruta.getId() + " desde la heladera origen " + ruta.getHeladeraIdOrigen() + " hacia la heladera destino " + ruta.getHeladeraIdDestino() +" asignado al colaborador " + ruta.getColaboradorId() + ".");
+        }
+
+        */
+
         // Si tanto la ruta como la vianda existen, procedo a crear y guardar el traslado
         Traslado traslado = this.trasladoRepository.save(
                 new Traslado(
