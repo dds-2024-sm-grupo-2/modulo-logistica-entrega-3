@@ -96,7 +96,7 @@ Se implementan los siguientes endpoints:
 
 ```
     - Método: GET
-    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/traslados/traslados/search/findByColaboradorId?id={id}&anio={anio}&mes={mes}
+    - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/traslados/search/findByColaboradorId?id={id}&anio={anio}&mes={mes}
     - Response code: 200 OK
 ```
 
