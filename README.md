@@ -40,10 +40,6 @@ Se implementan los siguientes endpoints:
 ```
     - Método: DELETE
     - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/rutas
-    - Headers: 
-        {
-            "Content-Type": "application/json"
-        }
     - Response code: 204 No Content
 ```
 
@@ -126,10 +122,6 @@ Se implementan los siguientes endpoints:
 ```
     - Método: DELETE
     - URL: https://two024-tp-entrega-3-kenzogrosvald.onrender.com/traslados
-    - Headers: 
-        {
-            "Content-Type": "application/json"
-        }
     - Response code: 204 No Content
 ```
 
