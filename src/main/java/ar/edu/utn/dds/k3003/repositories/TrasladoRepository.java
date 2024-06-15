@@ -73,6 +73,7 @@ public class TrasladoRepository {
         entityManager.getTransaction().begin();
         Traslado traslado = this.findById(idTraslado);
         traslado.setEstado(estado);
+        entityManager.merge(traslado);
         entityManager.getTransaction().commit();
     }
 
